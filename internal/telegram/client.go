@@ -40,6 +40,16 @@ type Chat struct {
 	Type string `json:"type"`
 }
 
+type ForwardOrigin struct {
+	Type            string `json:"type"`
+	Date            int64  `json:"date"`
+	SenderUser      *User  `json:"sender_user,omitempty"`
+	SenderUserName  string `json:"sender_user_name,omitempty"`
+	SenderChat      *Chat  `json:"sender_chat,omitempty"`
+	Chat            *Chat  `json:"chat,omitempty"`
+	AuthorSignature string `json:"author_signature,omitempty"`
+}
+
 type TextQuote struct {
 	Text     string `json:"text"`
 	Position int    `json:"position"`
@@ -56,6 +66,10 @@ type Message struct {
 	Photo             []PhotoSize        `json:"photo"`
 	Document          *Document          `json:"document"`
 	MediaGroupID      string             `json:"media_group_id"`
+	ForwardOrigin     *ForwardOrigin     `json:"forward_origin,omitempty"`
+	ForwardFrom       *User              `json:"forward_from,omitempty"`
+	ForwardFromChat   *Chat              `json:"forward_from_chat,omitempty"`
+	ViaBot            *User              `json:"via_bot,omitempty"`
 	ReplyToMessage    *Message           `json:"reply_to_message"`
 	Quote             *TextQuote         `json:"quote"`
 	ForumTopicCreated *ForumTopicCreated `json:"forum_topic_created,omitempty"`
