@@ -74,9 +74,10 @@ func TestMessageLegacyForwardFieldsRoundTrip(t *testing.T) {
 	}
 }
 
-// Messages without forward/via_bot fields must round-trip unchanged: the new
-// fields are omitted and do not alter existing behaviour.
-func TestMessageWithoutForwardFieldsUnchanged(t *testing.T) {
+// Messages without forward/via_bot data must still persist those keys as
+// null so downstream verifiers can distinguish "parsed, genuinely absent"
+// from "field never parsed". Values remain nil and change no behaviour.
+func TestMessageWithoutForwardFieldsNullKeys(t *testing.T) {
 	m := Message{
 		MessageID: 7,
 		From:      &User{ID: 1, Username: "a", IsBot: false},
@@ -88,9 +89,9 @@ func TestMessageWithoutForwardFieldsUnchanged(t *testing.T) {
 		t.Fatalf("marshal: %v", err)
 	}
 	s := string(out)
-	for _, absent := range []string{"forward_origin", "forward_from", "forward_from_chat", "via_bot"} {
-		if strings.Contains(s, absent) {
-			t.Fatalf("unexpected %s in plain message: %s", absent, s)
+	for _, want := range []string{`"forward_origin":null`, `"forward_from":null`, `"forward_from_chat":null`, `"via_bot":null`} {
+		if !strings.Contains(s, want) {
+			t.Fatalf("missing %s in plain message: %s", want, s)
 		}
 	}
 	if m.ForwardOrigin != nil || m.ForwardFrom != nil || m.ForwardFromChat != nil || m.ViaBot != nil {

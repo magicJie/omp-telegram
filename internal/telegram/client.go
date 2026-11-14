@@ -66,10 +66,10 @@ type Message struct {
 	Photo             []PhotoSize        `json:"photo"`
 	Document          *Document          `json:"document"`
 	MediaGroupID      string             `json:"media_group_id"`
-	ForwardOrigin     *ForwardOrigin     `json:"forward_origin,omitempty"`
-	ForwardFrom       *User              `json:"forward_from,omitempty"`
-	ForwardFromChat   *Chat              `json:"forward_from_chat,omitempty"`
-	ViaBot            *User              `json:"via_bot,omitempty"`
+	ForwardOrigin     *ForwardOrigin     `json:"forward_origin"`
+	ForwardFrom       *User              `json:"forward_from"`
+	ForwardFromChat   *Chat              `json:"forward_from_chat"`
+	ViaBot            *User              `json:"via_bot"`
 	ReplyToMessage    *Message           `json:"reply_to_message"`
 	Quote             *TextQuote         `json:"quote"`
 	ForumTopicCreated *ForumTopicCreated `json:"forum_topic_created,omitempty"`
