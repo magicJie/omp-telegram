@@ -26,6 +26,7 @@ type Config struct {
 	AllowedUsers          []int64
 	AllowedChats          []int64
 	WorkspaceRoot         string
+	WorkspaceLocked       bool
 	OMP                   string
 	OMPArgs               [][]string
 	OMPArgsLabels         []string
@@ -98,6 +99,7 @@ type ompEnvironmentFileConfig struct {
 type storageFileConfig struct {
 	DataDir               string `toml:"data_dir"`
 	WorkspaceRoot         string `toml:"workspace_root"`
+	WorkspaceLocked       bool   `toml:"workspace_locked"`
 	DatabaseRetentionDays any    `toml:"database_retention_days"`
 }
 
@@ -411,6 +413,7 @@ func load(path, baseDir string) (Config, error) {
 	if err = os.MkdirAll(c.WorkspaceRoot, 0700); err != nil {
 		return c, errors.New("storage.workspace_root must be a writable directory")
 	}
+	c.WorkspaceLocked = raw.Storage.WorkspaceLocked
 	if !filepath.IsAbs(c.DataDir) {
 		c.DataDir = filepath.Join(baseDir, c.DataDir)
 	}

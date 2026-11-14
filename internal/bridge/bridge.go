@@ -2706,6 +2706,9 @@ func (w *worker) call(kind string, fields map[string]any) (json.RawMessage, erro
 
 func (w *worker) newWorkspace(arg string) (string, error) {
 	if arg != "" {
+		if w.b.cfg.WorkspaceLocked {
+			return "", newMessageError(i18n.Msg.WorkspaceLockedCannotChange)
+		}
 		return resolveWorkspace(w.b.cfg.WorkspaceRoot, arg)
 	}
 	old, err := w.b.db.Binding(w.b.bot.ID, w.key.chat, w.key.thread)
@@ -3316,6 +3319,11 @@ func (w *worker) handleSlash(in incoming, text string) {
 		return
 	}
 	if cmd == "/move" {
+		if w.b.cfg.WorkspaceLocked {
+			w.say(w.tr(i18n.Msg.WorkspaceLockedCannotChange))
+			w.mark(in.id, store.InboxCancelled)
+			return
+		}
 		w.beginWorkspaceMove(in, arg)
 		return
 	}

@@ -426,6 +426,7 @@ var Msg = struct {
 	ThinkingSelectionUnavailableOpenThinkingChooseAgain                       Message
 	WorkingDirectoryUnavailableNoSessionsLoaded                               Message
 	WorkspaceRootMustAbsolutePath                                             Message
+	WorkspaceLockedCannotChange                                             Message
 	ThereNoUnresolvedMigration                                                Message
 	ThinkingLevel                                                             Message
 	ThinkingLevelOMPAdjustedRequestedLevel                                    Message
@@ -972,6 +973,7 @@ var Msg = struct {
 	ThinkingSelectionUnavailableOpenThinkingChooseAgain:                   message("The thinking selection is unavailable. Open /thinking to choose again.", "思考级别选项不可用. 请打开 /thinking 重新选择."),
 	WorkingDirectoryUnavailableNoSessionsLoaded:                           message("The working directory is unavailable. No sessions were loaded.", "工作目录不可用. 未加载任何会话."),
 	WorkspaceRootMustAbsolutePath:                                         message("The workspace root must be an absolute path.", "工作区根目录必须是绝对路径."),
+	WorkspaceLockedCannotChange:                                            message("The workspace is locked by bridge configuration; /new and /move cannot change it.", "工作区已被桥配置锁定, /new 和 /move 无法更改."),
 	ThereNoUnresolvedMigration:                                            message("There is no unresolved migration.", "没有待解决的迁移."),
 	ThinkingLevel:                                                         message("Thinking level: %s", "思考级别: %s"),
 	ThinkingLevelOMPAdjustedRequestedLevel:                                message("Thinking level: %s (OMP adjusted the requested %s level)", "思考级别: %s (OMP 调整了请求的 %s 级别)"),
